@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://4t1xn4sfn6oa"]
+
+[ext_resource type="Texture2D" uid="uid://da6yr7o5ns1b4" path="res://assets/bg/Mountain 2.png" id="1_2more"]
+[ext_resource type="Texture2D" uid="uid://bea5xg2xnbkvh" path="res://assets/bg/Mountain 1.png" id="2_338y2"]
+
+[node name="Background" type="ParallaxBackground"]
+scale = Vector2(6, 6)
+transform = Transform2D(6, 0, 0, 6, 0, 0)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer2"]
+position = Vector2(160, 90)
+texture = ExtResource("1_2more")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+position = Vector2(160, 89)
+texture = ExtResource("2_338y2")

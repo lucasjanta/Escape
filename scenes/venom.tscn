@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce2bfko5ctpsw"]
+
+[ext_resource type="Script" path="res://scenes/venom.gd" id="1_brwls"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5t6qg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_86bav"]
+size = Vector2(10, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v26xm"]
+radius = 1.41421
+
+[node name="Venom" type="RigidBody2D"]
+position = Vector2(22, 8)
+collision_layer = 0
+script = ExtResource("1_brwls")
+
+[node name="collision_area" type="Area2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="collision_area"]
+scale = Vector2(10, 10)
+texture = SubResource("PlaceholderTexture2D_5t6qg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collision_area"]
+shape = SubResource("RectangleShape2D_86bav")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v26xm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="collision_area" to="." method="_on_collision_area_body_entered"]

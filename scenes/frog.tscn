@@ -1,0 +1,192 @@
+[gd_scene load_steps=15 format=3 uid="uid://biv0r1fvim10e"]
+
+[ext_resource type="Script" path="res://scenes/frog.gd" id="1_7iwdr"]
+[ext_resource type="Script" path="res://scenes/StateMachine.gd" id="1_dcg7h"]
+[ext_resource type="Script" path="res://States/EnemyIdle.gd" id="2_aep71"]
+[ext_resource type="Script" path="res://States/EnemyFollow.gd" id="4_plv3y"]
+[ext_resource type="Script" path="res://States/EnemyAttack1.gd" id="5_hiim6"]
+[ext_resource type="Script" path="res://States/EnemyVenom.gd" id="6_ksu72"]
+[ext_resource type="PackedScene" uid="uid://c0flfjkxx60bk" path="res://scenes/show_hit.tscn" id="7_6eppt"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w1uk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ib4t3"]
+size = Vector2(1.01887, 1.01887)
+
+[sub_resource type="Animation" id="Animation_7nyut"]
+resource_name = "attack_left"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hit_area:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(26, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hit_area:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 1), Vector2(-1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("hit_area/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ax6t2"]
+resource_name = "attack_right"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hit_area:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(15, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hit_area:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.1, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("hit_area/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_k7aqq"]
+resource_name = "venom_right"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("State Machine/EnemyVenom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"venom_spit"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 1, 0.584314, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ccy7"]
+_data = {
+"attack_left": SubResource("Animation_7nyut"),
+"attack_right": SubResource("Animation_ax6t2"),
+"venom_right": SubResource("Animation_k7aqq")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dwlpo"]
+radius = 9.0
+height = 66.0
+
+[node name="Frog" type="CharacterBody2D"]
+script = ExtResource("1_7iwdr")
+health = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0, 1, 0.584314, 1)
+position = Vector2(12.75, 12.75)
+scale = Vector2(26.5, 26.5)
+texture = SubResource("PlaceholderTexture2D_w1uk1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12.5, 12.5)
+scale = Vector2(26.5, 26.5)
+shape = SubResource("RectangleShape2D_ib4t3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1ccy7")
+}
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_dcg7h")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("2_aep71")
+enemy = NodePath("../..")
+move_speed = 30.0
+
+[node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("4_plv3y")
+enemy = NodePath("../..")
+
+[node name="EnemyAttack" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("5_hiim6")
+enemy = NodePath("../..")
+
+[node name="EnemyVenom" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("6_ksu72")
+enemy = NodePath("../..")
+
+[node name="hit_area" type="Area2D" parent="."]
+position = Vector2(19.5, 0)
+scale = Vector2(-0.725, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hit_area"]
+position = Vector2(51, 13)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_dwlpo")
+
+[node name="show_hit" parent="." instance=ExtResource("7_6eppt")]
+offset_left = -8.0
+offset_top = -18.0
+offset_right = -8.0
+offset_bottom = -18.0
+
+[connection signal="body_entered" from="hit_area" to="State Machine/EnemyAttack" method="_on_hit_area_body_entered"]

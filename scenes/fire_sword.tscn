@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn5wt6takflgv"]
+
+[ext_resource type="Script" path="res://resources/weapons.gd" id="2_hbbqu"]
+
+[sub_resource type="GDScript" id="GDScript_26jnd"]
+script/source = "extends Node2D
+
+@export var weapon : Weapon
+
+@export var player : CharacterBody2D
+@onready var animation = $\"../AnimationPlayer\"
+
+var base_damage : float
+var knockback_force : float
+var combo_timer
+var combo_multiplier : float
+var framehit = 0
+#var isTouching = false
+var isCharging = false
+var isAttacking = false
+var charge_power = 0
+var final_damage : float
+var actual_enemy : CharacterBody2D
+
+func _ready():
+	load_weapon()
+	visible = false
+	
+func load_weapon():
+	base_damage = weapon.atk_damage # 10
+	knockback_force = weapon.knockback_force # 10
+
+
+func _on_hitbox_area_body_entered(body):
+	if body is Enemy and isAttacking: #isAttacking para saber se o jogador está na animação de ataque
+		damage(body)
+		knockback(body)
+	
+func _on_hitbox_area_body_exited(body):
+	pass
+	#começar a fazer o efeito do knockback aqui
+	
+#func tick_hit():
+	#if isTouching:
+		#framehit+= 1
+		#print(framehit)
+
+
+func _process(delta):
+	if 
+	#if isCharging:
+		#charge_power += delta
+		#if Input.is_action_just_released(\"RightClick\"):
+				#final_damage = base_damage * charge_power
+				#isCharging = false
+				#print(\"parou de segurar, o charge_power foi de \", charge_power)
+				#animation.play(\"attack1\")
+				#charge_power = 0
+	#if charge_power >= 5 and isCharging:
+		#final_damage = base_damage * charge_power
+		#isCharging = false
+		#animation.play(\"attack1\")
+		#charge_power = 0
+		#print(\"o carregamento excedeu\")
+			
+func damage(enemy):
+	if enemy != null:
+		if enemy.has_method(\"take_damage\"):
+			var attack = Attack.new()
+			attack.attack_damage = base_damage
+			 #* framehit
+			enemy.take_damage(attack)
+			print(\"o inimigo tomou \", attack.attack_damage, \"de dano\")
+	#framehit = 0	
+	
+	#attack.knockback_force = knockback_force
+#func check_hold():
+	#if Input.is_action_pressed(\"RightClick\"):
+		#animation.stop()
+
+func basic_attack():
+	isAttacking = true
+
+func finish_attack():
+	isAttacking = false
+	
+func knockback(enemy):
+	var direction
+	if global_position.x < enemy.global_position.x:
+		direction = 1
+	else:
+		direction = -1
+	if enemy != null:
+		if enemy.has_method(\"take_knockback\"):
+			enemy.take_knockback(knockback_force, direction)
+			print(\"foi\")
+			
+func charge_attack():
+	pass
+
+
+"
+
+[sub_resource type="Resource" id="Resource_3305f"]
+script = ExtResource("2_hbbqu")
+name = &"Fire Sword"
+atk_damage = 10.0
+knockback_force = 10.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_icq44"]
+size = Vector2(82, 68)
+
+[node name="fireSword" type="Node2D"]
+script = SubResource("GDScript_26jnd")
+weapon = SubResource("Resource_3305f")
+
+[node name="hitbox_area" type="Area2D" parent="."]
+position = Vector2(0, -9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_area"]
+position = Vector2(41, -15)
+shape = SubResource("RectangleShape2D_icq44")
+
+[connection signal="body_entered" from="hitbox_area" to="." method="_on_hitbox_area_body_entered"]
+[connection signal="body_exited" from="hitbox_area" to="." method="_on_hitbox_area_body_exited"]
