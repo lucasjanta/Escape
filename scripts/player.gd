@@ -15,7 +15,7 @@ var horizontal_direction = 0
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 @onready var fire_sword = $fireSword
-@onready var sm = $"State Machine"
+@onready var swordAttack = $"State Machine/PlayerSwordAttack"
 
 func _physics_process(delta):
 	flipped = sprite.flip_h
@@ -32,7 +32,11 @@ func _physics_process(delta):
 	
 	horizontal_direction = Input.get_axis("move_left", "move_right")
 	
-	if horizontal_direction != 0 and !fire_sword.isAttacking:
+	if horizontal_direction != 0 and !swordAttack.isAttacking:
 		sprite.flip_h = (horizontal_direction == -1)
+		
+	#if horizontal_direction != 0 and !fire_sword.isAttacking:
+		#sprite.flip_h = (horizontal_direction == -1)
+		#esse aqui é o certin?
 	
 	move_and_slide()

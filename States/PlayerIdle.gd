@@ -5,7 +5,7 @@ class_name PlayerIdle
 @export var anim : AnimationPlayer
 
 func Enter():
-	player.speed = 0
+	player.velocity.x = 0
 	anim.play("idle")
 	print("está em idle")
 	

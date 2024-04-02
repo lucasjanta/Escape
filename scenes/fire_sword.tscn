@@ -32,7 +32,7 @@ func load_weapon():
 
 
 func _on_hitbox_area_body_entered(body):
-	if body is Enemy and isAttacking: #isAttacking para saber se o jogador está na animação de ataque
+	if body is Enemy: #isAttacking para saber se o jogador está na animação de ataque
 		damage(body)
 		knockback(body)
 	
@@ -47,11 +47,12 @@ func _on_hitbox_area_body_exited(body):
 
 
 func _process(delta):
-	if isAttacking:
-		print(\"attacking\")
-		player.speed = 50
-	else:
-		player.speed = 300
+	pass
+	#if isAttacking:
+		#print(\"attacking\")
+		#player.speed = 50
+	#else:
+		#player.speed = 300
 	#if isCharging:
 		#charge_power += delta
 		#if Input.is_action_just_released(\"RightClick\"):
@@ -83,10 +84,12 @@ func damage(enemy):
 		#animation.stop()
 
 func basic_attack():
-	isAttacking = true
+	#isAttacking = true
+	pass
 
 func finish_attack():
-	isAttacking = false
+	#isAttacking = false
+	pass
 	
 func knockback(enemy):
 	var direction

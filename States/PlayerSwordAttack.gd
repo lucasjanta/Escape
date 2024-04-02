@@ -24,8 +24,8 @@ func Update(delta:float):
 			Transitioned.emit(self, "PlayerWalk")
 		if !isAttacking and player.horizontal_direction == 0:
 			Transitioned.emit(self, "PlayerIdle")
-	if !player.is_on_floor():
-		Transitioned.emit(self, "PlayerJump")
+	#if !player.is_on_floor():
+		#Transitioned.emit(self, "PlayerJump")
 	
 
 func Physics_Update(delta:float):
@@ -33,5 +33,5 @@ func Physics_Update(delta:float):
 	pass
 
 func Exit():
-	sword.isAttacking = false
+	isAttacking = false
 	pass

@@ -794,7 +794,7 @@ limit_top = -230
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -13)
 texture = ExtResource("2_y381d")
-offset = Vector2(9, -9)
+offset = Vector2(18, -16)
 hframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
