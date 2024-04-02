@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://biv0r1fvim10e"]
+[gd_scene load_steps=16 format=3 uid="uid://biv0r1fvim10e"]
 
 [ext_resource type="Script" path="res://scenes/frog.gd" id="1_7iwdr"]
 [ext_resource type="Script" path="res://scenes/StateMachine.gd" id="1_dcg7h"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://States/EnemyAttack1.gd" id="5_hiim6"]
 [ext_resource type="Script" path="res://States/EnemyVenom.gd" id="6_ksu72"]
 [ext_resource type="PackedScene" uid="uid://c0flfjkxx60bk" path="res://scenes/show_hit.tscn" id="7_6eppt"]
+[ext_resource type="Script" path="res://States/Knockback.gd" id="7_bvdrk"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w1uk1"]
 
@@ -173,6 +174,9 @@ enemy = NodePath("../..")
 [node name="EnemyVenom" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("6_ksu72")
 enemy = NodePath("../..")
+
+[node name="Knockback" type="Node" parent="State Machine"]
+script = ExtResource("7_bvdrk")
 
 [node name="hit_area" type="Area2D" parent="."]
 position = Vector2(19.5, 0)

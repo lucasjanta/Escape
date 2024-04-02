@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bqt6mkxalskos"]
+[gd_scene load_steps=24 format=3 uid="uid://bqt6mkxalskos"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_lhp4i"]
 [ext_resource type="PackedScene" uid="uid://cn5wt6takflgv" path="res://scenes/fire_sword.tscn" id="2_kclbb"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" path="res://States/PlayerIdle.gd" id="9_pp6j3"]
 [ext_resource type="Script" path="res://States/PlayerJump.gd" id="10_e068h"]
 [ext_resource type="Script" path="res://States/PlayerWalk.gd" id="11_uw3vk"]
+[ext_resource type="Script" path="res://States/PlayerSwordAttack.gd" id="12_pn1j7"]
+[ext_resource type="Script" path="res://States/PlayerDash.gd" id="13_fkeo4"]
+[ext_resource type="PackedScene" uid="uid://ckwvnjdsnm1ic" path="res://scenes/dash.tscn" id="13_i12te"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ewhxa"]
 size = Vector2(17, 43)
@@ -77,9 +80,21 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CollisionShape2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, -12)]
+}
 
-[sub_resource type="Animation" id="Animation_uc0dx"]
-resource_name = "attack1"
+[sub_resource type="Animation" id="Animation_fmvk7"]
+resource_name = "attack1_left"
 length = 0.3
 step = 0.05
 tracks/0/type = "value"
@@ -137,10 +152,10 @@ tracks/4/path = NodePath("CollisionShape2D:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.25),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(9, -12), Vector2(11, -12)]
+"values": [Vector2(9, -12), Vector2(0, -12)]
 }
 tracks/5/type = "method"
 tracks/5/imported = false
@@ -149,7 +164,7 @@ tracks/5/path = NodePath("fireSword")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.1, 0.25),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -166,7 +181,7 @@ tracks/6/path = NodePath("fireSword:scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.1, 0.25),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1, 0.1), Vector2(1, 1)]
@@ -178,7 +193,149 @@ tracks/7/path = NodePath("fireSword:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.1, 0.25),
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-65, -50), Vector2(-65, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("fireSword:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprite2D:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sprite2D:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-20, -13)]
+}
+
+[sub_resource type="Animation" id="Animation_uc0dx"]
+resource_name = "attack1_right"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_hhx56")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(18, -16)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(9, -12), Vector2(15, -12)]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("fireSword")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"basic_attack"
+}, {
+"args": [],
+"method": &"finish_attack"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("fireSword:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 0.1), Vector2(1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("fireSword:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0, -50), Vector2(0, 0)]
@@ -190,10 +347,34 @@ tracks/8/path = NodePath("fireSword:visible")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0.1, 0.3),
+"times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprite2D:flip_h")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sprite2D:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -13)]
 }
 
 [sub_resource type="Animation" id="Animation_sroyr"]
@@ -270,6 +451,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(9, -10)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("fireSword:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_2i3ex"]
@@ -358,6 +551,18 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(9, -9)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite2D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -13)]
 }
 
 [sub_resource type="Animation" id="Animation_5shff"]
@@ -448,6 +653,30 @@ tracks/6/keys = {
 "update": 0,
 "values": [Vector2(9, -9)]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprite2D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -13)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("fireSword:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_vvw52"]
 resource_name = "run"
@@ -525,11 +754,24 @@ tracks/5/keys = {
 "update": 0,
 "values": [Vector2(9, -9)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -13)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_35308"]
 _data = {
 "RESET": SubResource("Animation_rq4il"),
-"attack1": SubResource("Animation_uc0dx"),
+"attack1_left": SubResource("Animation_fmvk7"),
+"attack1_right": SubResource("Animation_uc0dx"),
 "dash": SubResource("Animation_sroyr"),
 "idle": SubResource("Animation_2i3ex"),
 "jump": SubResource("Animation_5shff"),
@@ -552,11 +794,11 @@ limit_top = -230
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -13)
 texture = ExtResource("2_y381d")
-offset = Vector2(18, -16)
+offset = Vector2(9, -9)
 hframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(9.8, -12)
+position = Vector2(9, -12)
 shape = SubResource("RectangleShape2D_ewhxa")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -565,10 +807,11 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="fireSword" parent="." instance=ExtResource("2_kclbb")]
+[node name="fireSword" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_kclbb")]
 visible = false
 position = Vector2(0, -50)
 scale = Vector2(1, 0.1)
+player = NodePath("..")
 
 [node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("8_h6vsv")
@@ -588,3 +831,17 @@ anim = NodePath("../../AnimationPlayer")
 script = ExtResource("11_uw3vk")
 player = NodePath("../..")
 anim = NodePath("../../AnimationPlayer")
+
+[node name="PlayerSwordAttack" type="Node" parent="State Machine" node_paths=PackedStringArray("player", "anim", "sword")]
+script = ExtResource("12_pn1j7")
+player = NodePath("../..")
+anim = NodePath("../../AnimationPlayer")
+sword = NodePath("../../fireSword")
+
+[node name="PlayerDash" type="Node" parent="State Machine" node_paths=PackedStringArray("player", "anim", "dash")]
+script = ExtResource("13_fkeo4")
+player = NodePath("../..")
+anim = NodePath("../../AnimationPlayer")
+dash = NodePath("../../Dash")
+
+[node name="Dash" parent="." instance=ExtResource("13_i12te")]

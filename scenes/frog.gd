@@ -6,6 +6,7 @@ class_name Enemy
 @export var health : float
 @export var base_dmg := 10.0
 
+
 @export var lick_cooldown := 5.0
 var lick_on_cooldown = false
 

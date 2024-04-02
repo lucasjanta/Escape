@@ -13,7 +13,6 @@ var wander_time : float
 func Enter():
 	player = get_tree().get_first_node_in_group("Player")
 	randomize_wander()
-	print("entrou em idle")
 	
 func Update(delta: float):
 	if wander_time > 0:

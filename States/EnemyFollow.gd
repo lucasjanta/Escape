@@ -41,6 +41,8 @@ func Physics_Update(delta : float):
 		if distance < 200 and distance > -200 and enemy.venom_on_cooldown == false and enemy.is_on_floor():
 			Transitioned.emit(self,"EnemyVenom")
 	
+	
+	
 func randomized_jump():
 		jump_height = randf_range(300,500)
 		jump_force = randf_range(1500, 2000)
